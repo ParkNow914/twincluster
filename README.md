@@ -1,116 +1,64 @@
-# TwinGrid / ClusterOps Platform
+# TwinGrid - Industrial Platform
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/ParkNow914/twincluster/pulls)
-[![GitHub stars](https://img.shields.io/github/stars/ParkNow914/twincluster?style=social)](https://github.com/ParkNow914/twincluster/stargazers)
+A modern industrial platform for managing service orders, assets, and maintenance operations.
 
-A comprehensive industrial maintenance and logistics orchestration platform built with Next.js, FastAPI, and PostgreSQL.
+![TwinGrid Logo](https://via.placeholder.com/150x50?text=TwinGrid)
 
-## ✨ Features
+## 🚀 Features
 
-- **Multi-role Authentication** (Admin, Client, Provider, Operator)
-- **Service Order Management** with real-time updates
-- **Asset & Inventory Tracking** with maintenance scheduling
-- **Document Management** with version control
-- **Payment Processing** with multiple payment methods
-- **Real-time Notifications**
-- **Responsive Design** for all devices
-- **Dark/Light Mode**
+- **Authentication & Authorization**
+  - User registration and login
+  - Email verification
+  - Password reset
+  - Role-based access control (Admin, Client, Provider, Operator)
 
-## 🚀 Tech Stack
+- **Service Order Management**
+  - Create and track service orders
+  - Assign service providers
+  - Track order status in real-time
+  - Digital checklists and documentation
 
-- **Frontend**: Next.js 14, TypeScript, Tailwind CSS, Shadcn UI
-- **Backend**: FastAPI, Python 3.11+
-- **Database**: PostgreSQL with SQLAlchemy ORM
-- **Authentication**: JWT with refresh tokens
-- **Storage**: Local filesystem (S3 compatible)
-- **Real-time**: WebSockets
-- **Testing**: Jest, React Testing Library, Pytest
+- **Asset Management**
+  - Comprehensive asset tracking
+  - Maintenance history and scheduling
+  - Document management
+  - Barcode/QR code support
 
-## 🛠️ Prerequisites
+- **Document Management**
+  - Secure file upload and storage
+  - Version control
+  - Team collaboration
 
-- Node.js 18+
-- Python 3.11+
-- PostgreSQL 14+
-- pnpm (recommended) or npm
-- Docker (optional)
+- **Real-time Dashboard**
+  - Live notifications
+  - Activity feed
+  - Performance analytics
 
-## 🚀 Getting Started
+## 🛠 Tech Stack
 
-### 1. Clone the repository
+### Frontend
+- **Framework**: Next.js 14+ (App Router)
+- **Language**: TypeScript 5+
+- **Styling**: Tailwind CSS + Radix UI
+- **State Management**: React Query + Context API
+- **Form Handling**: React Hook Form + Zod
+- **Testing**: Jest + React Testing Library
 
-```bash
-git clone https://github.com/ParkNow914/twincluster.git
-cd twincluster
-```
+### Backend
+- **Language**: Python 3.11+
+- **Framework**: FastAPI
+- **Database**: PostgreSQL 15+
+- **ORM**: SQLAlchemy 2.0
+- **Async**: asyncio + httpx
+- **Background Tasks**: Celery + Redis
 
-### 2. Set up the backend
+### DevOps
+- **Containerization**: Docker + Docker Compose
+- **CI/CD**: GitHub Actions
+- **Monitoring**: Sentry + Prometheus
+- **Logging**: Loguru + ELK Stack
 
-```bash
-# Navigate to backend directory
-cd backend
-
-# Create and activate virtual environment (recommended)
-python -m venv venv
-source venv/bin/activate  # On Windows: .\venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your configuration
-
-# Run database migrations
-alembic upgrade head
-
-# Start the backend server
-uvicorn app.main:app --reload
-```
-
-### 3. Set up the frontend
-
-```bash
-# Navigate to frontend directory
-cd frontend
-
-# Install dependencies
-pnpm install  # or npm install
-
-# Start the development server
-pnpm dev
-```
-
-### 4. Access the application
-
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000
-- API Documentation: http://localhost:8000/docs
-
-## 📦 Project Structure
-
-```
-twincluster/
-├── backend/               # FastAPI backend
-│   ├── app/               # Application code
-│   │   ├── api/           # API routes
-│   │   ├── core/          # Core functionality
-│   │   ├── crud/          # Database operations
-│   │   ├── db/            # Database configuration
-│   │   ├── models/        # SQLAlchemy models
-│   │   └── schemas/       # Pydantic models
-│   ├── tests/             # Backend tests
-│   └── alembic/           # Database migrations
-│
-├── frontend/              # Next.js frontend
-│   ├── public/            # Static files
-│   └── src/               # Source code
-│       ├── app/           # App router
-│       ├── components/    # Reusable components
-│       ├── lib/           # Utilities and API client
-│       └── styles/        # Global styles
-│
-└── docs/                  # Documentation
+## 🚀 Quick Start
 └── scripts/             # Utility scripts
 ```
 
