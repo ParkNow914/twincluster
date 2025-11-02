@@ -1,5 +1,6 @@
 import { Team, Formation } from '../models/Team';
 import { Player, Position } from '../models/Player';
+import { nanoid } from 'nanoid';
 
 export const generatePlayer = (
   name: string,
@@ -8,7 +9,7 @@ export const generatePlayer = (
   nationality: string,
   overall: number
 ): Player => ({
-  id: Math.random().toString(36).substr(2, 9),
+  id: nanoid(),
   name,
   age,
   position,

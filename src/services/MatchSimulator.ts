@@ -1,6 +1,7 @@
 import { Team } from '../models/Team';
 import { Match, MatchEvent } from '../models/Match';
 import { Player } from '../models/Player';
+import { nanoid } from 'nanoid';
 
 export class MatchSimulator {
   /**
@@ -12,7 +13,7 @@ export class MatchSimulator {
     competition: string = 'League'
   ): Match {
     const match: Match = {
-      id: Math.random().toString(36).substr(2, 9),
+      id: nanoid(),
       homeTeamId: homeTeam.id,
       awayTeamId: awayTeam.id,
       homeScore: 0,
