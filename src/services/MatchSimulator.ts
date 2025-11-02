@@ -1,5 +1,5 @@
 import { Team } from '../models/Team';
-import { Match, MatchEvent } from '../models/Match';
+import { Match } from '../models/Match';
 import { Player } from '../models/Player';
 import { nanoid } from 'nanoid';
 
@@ -87,6 +87,10 @@ export class MatchSimulator {
    * Select a random attacking player for scoring
    */
   private static selectRandomAttacker(players: Player[]): Player {
+    if (!players || players.length === 0) {
+      throw new Error('Cannot select a random attacker from an empty player array');
+    }
+
     const attackers = players.filter(p => 
       ['ST', 'LW', 'RW', 'CAM'].includes(p.position)
     );
@@ -113,6 +117,9 @@ export class MatchSimulator {
    * Select a random player
    */
   private static selectRandomPlayer(players: Player[]): Player {
+    if (!players || players.length === 0) {
+      throw new Error('Cannot select a random player from an empty array');
+    }
     return players[Math.floor(Math.random() * players.length)];
   }
 

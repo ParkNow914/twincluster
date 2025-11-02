@@ -5,7 +5,6 @@ import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
-  TouchableOpacity,
 } from 'react-native';
 import { GameState } from '../services/GameState';
 
