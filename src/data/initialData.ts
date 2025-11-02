@@ -34,6 +34,11 @@ export const generatePlayer = (
   yellowCards: 0,
   redCards: 0,
   minutesPlayed: 0,
+  // NEW: Contract and happiness
+  wage: overall * 10000, // Weekly wage based on rating
+  contractYears: Math.floor(Math.random() * 3) + 2, // 2-4 years
+  happiness: 75 + Math.floor(Math.random() * 20), // 75-95
+  potential: Math.min(99, overall + Math.floor(Math.random() * (age < 23 ? 15 : age < 28 ? 5 : 0))), // Younger players have more potential
 });
 
 const createSquad = (teamName: string): Player[] => {

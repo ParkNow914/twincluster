@@ -12,6 +12,12 @@ export interface Team {
   formation: Formation;
   tactics: Tactics;
   chemistry: number; // Team chemistry (0-100)
+  // NEW: Youth academy and scouting
+  youthPlayers?: Player[]; // Youth academy players
+  scouts?: number; // Number of scouts (0-5)
+  // NEW: Manager stats
+  managerReputation?: number; // Manager reputation (0-100)
+  trophies?: number; // Total trophies won
 }
 
 export enum Formation {

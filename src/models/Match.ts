@@ -40,6 +40,16 @@ export interface Season {
   currentWeek: number;
   matches: Match[];
   standings: TeamStanding[];
+  cupMatches?: Match[]; // NEW: Cup competition matches
+  cupRound?: string; // Current cup round (R16, QF, SF, F)
+}
+
+// NEW: Cup competition structure
+export interface CupCompetition {
+  name: string;
+  round: string; // 'R16', 'QF', 'SF', 'F' (Round of 16, Quarter-finals, Semi-finals, Final)
+  matches: Match[];
+  winner?: string; // Team ID of the winner
 }
 
 export interface TeamStanding {

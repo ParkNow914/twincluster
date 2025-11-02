@@ -24,6 +24,12 @@ export interface Player {
   yellowCards: number;
   redCards: number;
   minutesPlayed: number;
+  // NEW: Contract system
+  wage: number; // Weekly wage
+  contractYears: number; // Years remaining on contract
+  happiness: number; // Player happiness (0-100)
+  // NEW: Potential for young players
+  potential: number; // Maximum potential rating (1-100)
 }
 
 export enum Position {
