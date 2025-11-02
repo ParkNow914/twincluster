@@ -5,6 +5,7 @@ import { HomeScreen } from './src/screens/HomeScreen';
 import { SquadScreen } from './src/screens/SquadScreen';
 import { MatchesScreen } from './src/screens/MatchesScreen';
 import { StandingsScreen } from './src/screens/StandingsScreen';
+import { TacticsScreen } from './src/screens/TacticsScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,7 +26,7 @@ export default function App() {
             paddingTop: 8,
           },
           tabBarLabelStyle: {
-            fontSize: 12,
+            fontSize: 11,
             fontWeight: '600',
           },
         }}
@@ -51,6 +52,14 @@ export default function App() {
           component={MatchesScreen}
           options={{
             tabBarLabel: 'Matches',
+            tabBarIcon: () => null,
+          }}
+        />
+        <Tab.Screen
+          name="Tactics"
+          component={TacticsScreen}
+          options={{
+            tabBarLabel: 'Tactics',
             tabBarIcon: () => null,
           }}
         />

@@ -138,13 +138,115 @@ export class MatchSimulator {
           match.statistics.awayFouls++;
         }
         
+        // Check for second yellow (red card)
+        if (player.yellowCards >= 2 && Math.random() < 0.3) {
+          player.redCards++;
+          match.events.push({
+            minute,
+            type: 'red_card',
+            playerId: player.id,
+            teamId,
+            description: `🟥 ${player.name} sent off! (Second yellow)`,
+          });
+        } else {
+          match.events.push({
+            minute,
+            type: 'yellow_card',
+            playerId: player.id,
+            teamId,
+            description: `🟨 ${player.name} receives a yellow card`,
+          });
+        }
+      }
+
+      // Red cards (very rare, direct)
+      if (Math.random() < 0.003) {
+        const player = this.selectRandomPlayer([...homeTeam.players, ...awayTeam.players]);
+        const teamId = homeTeam.players.includes(player) ? homeTeam.id : awayTeam.id;
+        
+        player.redCards++;
         match.events.push({
           minute,
-          type: 'yellow_card',
+          type: 'red_card',
           playerId: player.id,
           teamId,
-          description: `🟨 ${player.name} receives a yellow card`,
+          description: `🟥 ${player.name} sent off! (Straight red)`,
         });
+      }
+
+      // Offsides
+      if (Math.random() < 0.04) {
+        const player = this.selectRandomAttacker(homeTeam.players);
+        match.events.push({
+          minute,
+          type: 'offside',
+          playerId: player.id,
+          teamId: homeTeam.id,
+          description: `🚩 ${player.name} caught offside`,
+        });
+      }
+      if (Math.random() < 0.03) {
+        const player = this.selectRandomAttacker(awayTeam.players);
+        match.events.push({
+          minute,
+          type: 'offside',
+          playerId: player.id,
+          teamId: awayTeam.id,
+          description: `🚩 ${player.name} caught offside`,
+        });
+      }
+
+      // Penalties (rare)
+      if (Math.random() < 0.008) {
+        const scorer = this.selectRandomAttacker(homeTeam.players);
+        const penaltySuccess = Math.random() > 0.2; // 80% conversion rate
+        
+        if (penaltySuccess) {
+          match.homeScore++;
+          match.statistics.homeShotsOnTarget++;
+          scorer.goals++;
+          match.events.push({
+            minute,
+            type: 'goal',
+            playerId: scorer.id,
+            teamId: homeTeam.id,
+            description: `⚽ PENALTY! ${scorer.name} scores from the spot!`,
+          });
+        } else {
+          match.events.push({
+            minute,
+            type: 'save',
+            playerId: scorer.id,
+            teamId: homeTeam.id,
+            description: `🧤 PENALTY SAVED! ${scorer.name}'s penalty is saved!`,
+          });
+        }
+      }
+
+      if (Math.random() < 0.006) {
+        const scorer = this.selectRandomAttacker(awayTeam.players);
+        const penaltySuccess = Math.random() > 0.2;
+        
+        if (penaltySuccess) {
+          match.awayScore++;
+          match.statistics.awayShotsOnTarget++;
+          scorer.goals++;
+          match.events.push({
+            minute,
+            type: 'goal',
+            playerId: scorer.id,
+            teamId: awayTeam.id,
+            description: `⚽ PENALTY! ${scorer.name} scores from the spot!`,
+          });
+        } else {
+          match.events.push({
+            minute,
+            type: 'save',
+            playerId: scorer.id,
+            teamId: awayTeam.id,
+            description: `🧤 PENALTY SAVED! ${scorer.name}'s penalty is saved!`,
+          });
+        }
       }
 
       // Corners

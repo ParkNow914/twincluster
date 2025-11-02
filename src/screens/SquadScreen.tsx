@@ -5,12 +5,29 @@ import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { GameState } from '../services/GameState';
+import { PlayerDevelopment } from '../services/PlayerDevelopment';
 
 export const SquadScreen = () => {
   const [gameState] = useState(() => GameState.getInstance());
+  const [, forceUpdate] = useState(0);
   const playerTeam = gameState.getPlayerTeam();
+
+  const handleTraining = () => {
+    if (!playerTeam) return;
+    
+    PlayerDevelopment.teamTrainingSession(playerTeam);
+    forceUpdate(prev => prev + 1);
+    
+    Alert.alert(
+      'Training Complete!',
+      'Your team has completed a training session. Players have improved and stamina has been reduced.',
+      [{ text: 'OK' }]
+    );
+  };
 
   if (!playerTeam) {
     return (
@@ -85,6 +102,15 @@ export const SquadScreen = () => {
           <Text style={styles.subtitle}>
             Formation: {playerTeam.formation}
           </Text>
+        </View>
+
+        <View style={styles.actionSection}>
+          <TouchableOpacity
+            style={styles.trainingButton}
+            onPress={handleTraining}
+          >
+            <Text style={styles.trainingButtonText}>🏋️ Team Training Session</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.section}>
@@ -162,6 +188,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#b0bec5',
     marginTop: 5,
+  },
+  actionSection: {
+    margin: 10,
+    marginTop: 15,
+  },
+  trainingButton: {
+    backgroundColor: '#ff9800',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  trainingButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   section: {
     margin: 10,

@@ -136,6 +136,61 @@ export class PlayerDevelopment {
   }
 
   /**
+   * Train a specific player in a specific attribute
+   */
+  static trainPlayer(player: Player, attribute: keyof Player): void {
+    if (player.injured) {
+      return; // Can't train injured players
+    }
+
+    const numericAttributes: Array<keyof Player> = [
+      'pace', 'shooting', 'passing', 'dribbling', 'defending', 'physical'
+    ];
+
+    if (!numericAttributes.includes(attribute)) {
+      return;
+    }
+
+    // Training improves the stat slightly
+    const currentValue = player[attribute] as number;
+    if (currentValue < 99) {
+      (player[attribute] as number) = Math.min(99, currentValue + Math.floor(Math.random() * 2 + 1));
+      
+      // Update overall rating based on improvements
+      const avgStat = (player.pace + player.shooting + player.passing + 
+                       player.dribbling + player.defending + player.physical) / 6;
+      player.overall = Math.round(avgStat);
+      player.marketValue = player.overall * 100000;
+    }
+
+    // Training costs stamina
+    player.stamina = Math.max(30, player.stamina - 15);
+    
+    // Training improves morale slightly
+    player.morale = Math.min(100, player.morale + 2);
+  }
+
+  /**
+   * Team training session - trains all players
+   */
+  static teamTrainingSession(team: Team, focusAttribute?: keyof Player): void {
+    team.players.forEach(player => {
+      if (!player.injured) {
+        if (focusAttribute) {
+          this.trainPlayer(player, focusAttribute);
+        } else {
+          // Random attribute training
+          const attributes: Array<keyof Player> = [
+            'pace', 'shooting', 'passing', 'dribbling', 'defending', 'physical'
+          ];
+          const randomAttr = attributes[Math.floor(Math.random() * attributes.length)];
+          this.trainPlayer(player, randomAttr);
+        }
+      }
+    });
+  }
+
+  /**
    * Reset season stats for all players
    */
   static resetSeasonStats(team: Team): void {
