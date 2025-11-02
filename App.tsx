@@ -9,6 +9,7 @@ import { TacticsScreen } from './src/screens/TacticsScreen';
 import { TransferMarketScreen } from './src/screens/TransferMarketScreen';
 import { StatisticsScreen } from './src/screens/StatisticsScreen';
 import { YouthAcademyScreen } from './src/screens/YouthAcademyScreen';
+import ClubManagementScreen from './src/screens/ClubManagementScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,6 +40,14 @@ export default function App() {
           component={HomeScreen}
           options={{
             tabBarLabel: 'Home',
+            tabBarIcon: () => null,
+          }}
+        />
+        <Tab.Screen
+          name="Club"
+          component={ClubManagementScreen}
+          options={{
+            tabBarLabel: 'Club',
             tabBarIcon: () => null,
           }}
         />

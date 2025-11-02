@@ -1,4 +1,5 @@
 import { Player } from './Player';
+import { Trophy, ClubObjective, Achievement, NewsItem, Sponsorship, TrainingProgram, LoanDeal } from './Club';
 
 export interface Team {
   id: string;
@@ -12,12 +13,20 @@ export interface Team {
   formation: Formation;
   tactics: Tactics;
   chemistry: number; // Team chemistry (0-100)
-  // NEW: Youth academy and scouting
+  // Youth academy and scouting
   youthPlayers?: Player[]; // Youth academy players
   scouts?: number; // Number of scouts (0-5)
-  // NEW: Manager stats
+  // Manager stats
   managerReputation?: number; // Manager reputation (0-100)
   trophies?: number; // Total trophies won
+  // NEW: Advanced features
+  trophyList?: Trophy[]; // List of trophies won
+  objectives?: ClubObjective[]; // Season objectives
+  achievements?: Achievement[]; // Unlocked achievements
+  news?: NewsItem[]; // Club news feed
+  sponsorship?: Sponsorship; // Active sponsorship deal
+  trainingProgram?: TrainingProgram; // Active training focus
+  loanDeals?: LoanDeal[]; // Active loan deals
 }
 
 export enum Formation {
