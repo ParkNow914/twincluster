@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "Football Manager POC",
+    "slug": "football-manager-poc",
+    "version": "1.0.0",
+    "description": "A cross-platform football management simulation game proof-of-concept",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a237e"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.twincluster.footballmanager"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1a237e"
+      },
+      "package": "com.twincluster.footballmanager",
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "name": "Football Manager POC",
+      "shortName": "FM POC",
+      "description": "Cross-platform football management game",
+      "themeColor": "#1a237e"
+    }
+  }
+}
