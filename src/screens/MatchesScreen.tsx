@@ -105,6 +105,44 @@ export const MatchesScreen = () => {
             </View>
           </View>
 
+          {selectedMatch.statistics && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>📊 Match Statistics</Text>
+              <View style={styles.statsGrid}>
+                <View style={styles.statRow}>
+                  <Text style={styles.statValue}>{selectedMatch.statistics.homePossession}%</Text>
+                  <Text style={styles.statLabel}>Possession</Text>
+                  <Text style={styles.statValue}>{selectedMatch.statistics.awayPossession}%</Text>
+                </View>
+                <View style={styles.statRow}>
+                  <Text style={styles.statValue}>{selectedMatch.statistics.homeShots}</Text>
+                  <Text style={styles.statLabel}>Shots</Text>
+                  <Text style={styles.statValue}>{selectedMatch.statistics.awayShots}</Text>
+                </View>
+                <View style={styles.statRow}>
+                  <Text style={styles.statValue}>{selectedMatch.statistics.homeShotsOnTarget}</Text>
+                  <Text style={styles.statLabel}>Shots on Target</Text>
+                  <Text style={styles.statValue}>{selectedMatch.statistics.awayShotsOnTarget}</Text>
+                </View>
+                <View style={styles.statRow}>
+                  <Text style={styles.statValue}>{selectedMatch.statistics.homePassAccuracy}%</Text>
+                  <Text style={styles.statLabel}>Pass Accuracy</Text>
+                  <Text style={styles.statValue}>{selectedMatch.statistics.awayPassAccuracy}%</Text>
+                </View>
+                <View style={styles.statRow}>
+                  <Text style={styles.statValue}>{selectedMatch.statistics.homeCorners}</Text>
+                  <Text style={styles.statLabel}>Corners</Text>
+                  <Text style={styles.statValue}>{selectedMatch.statistics.awayCorners}</Text>
+                </View>
+                <View style={styles.statRow}>
+                  <Text style={styles.statValue}>{selectedMatch.statistics.homeFouls}</Text>
+                  <Text style={styles.statLabel}>Fouls</Text>
+                  <Text style={styles.statValue}>{selectedMatch.statistics.awayFouls}</Text>
+                </View>
+              </View>
+            </View>
+          )}
+
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>⚽ Match Events</Text>
             {selectedMatch.events.length === 0 ? (
@@ -341,5 +379,29 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#333',
     flex: 1,
+  },
+  statsGrid: {
+    marginTop: 10,
+  },
+  statRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  statValue: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#1a237e',
+    width: 60,
+    textAlign: 'center',
+  },
+  statLabel: {
+    fontSize: 13,
+    color: '#666',
+    flex: 1,
+    textAlign: 'center',
   },
 });

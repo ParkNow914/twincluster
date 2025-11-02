@@ -54,9 +54,26 @@ export const SquadScreen = () => {
         <Text style={styles.stat}>DEF {player.defending}</Text>
         <Text style={styles.stat}>PHY {player.physical}</Text>
       </View>
-      {player.injured && (
-        <Text style={styles.injuredText}>🚑 Injured</Text>
+      {(player.goals > 0 || player.assists > 0) && (
+        <View style={styles.seasonStatsRow}>
+          <Text style={styles.seasonStat}>⚽ {player.goals} Goals</Text>
+          <Text style={styles.seasonStat}>👟 {player.assists} Assists</Text>
+          <Text style={styles.seasonStat}>🎮 {player.gamesPlayed} Games</Text>
+        </View>
       )}
+      {player.injured && (
+        <Text style={styles.injuredText}>
+          🚑 Injured ({player.injuryDaysRemaining} days)
+        </Text>
+      )}
+      <View style={styles.conditionRow}>
+        <Text style={styles.conditionText}>
+          Stamina: {player.stamina}/{player.maxStamina}
+        </Text>
+        <Text style={styles.conditionText}>
+          Morale: {player.morale}%
+        </Text>
+      </View>
     </View>
   );
 
@@ -213,6 +230,31 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#666',
     fontWeight: '600',
+  },
+  seasonStatsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
+  },
+  seasonStat: {
+    fontSize: 11,
+    color: '#4caf50',
+    fontWeight: '600',
+  },
+  conditionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#f0f0f0',
+  },
+  conditionText: {
+    fontSize: 11,
+    color: '#666',
   },
   injuredText: {
     color: '#f44336',

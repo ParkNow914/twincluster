@@ -11,6 +11,7 @@ export interface Team {
   players: Player[];
   formation: Formation;
   tactics: Tactics;
+  chemistry: number; // Team chemistry (0-100)
 }
 
 export enum Formation {
@@ -26,4 +27,5 @@ export interface Tactics {
   width: number; // 1-10
   tempo: number; // 1-10
   passingStyle: 'short' | 'mixed' | 'long';
+  pressing: 'low' | 'medium' | 'high'; // New tactical option
 }

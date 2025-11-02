@@ -2,6 +2,7 @@ import { Team } from '../models/Team';
 import { Match, Season, TeamStanding } from '../models/Match';
 import { initialTeams } from '../data/initialData';
 import { MatchSimulator } from './MatchSimulator';
+import { PlayerDevelopment } from './PlayerDevelopment';
 
 export class GameState {
   private static instance: GameState;
@@ -9,10 +10,12 @@ export class GameState {
   public teams: Team[];
   public playerTeamId: string;
   public season: Season;
+  public currentWeek: number;
 
   private constructor() {
     this.teams = [...initialTeams];
     this.playerTeamId = this.teams[0].id; // Default to first team
+    this.currentWeek = 1;
     this.season = this.initializeSeason();
   }
 
@@ -119,6 +122,12 @@ export class GameState {
     // Update standings
     this.updateStandings(result);
 
+    // Advance week and develop players
+    this.currentWeek++;
+    if (this.currentWeek % 2 === 0) { // Every 2 weeks
+      this.teams.forEach(team => PlayerDevelopment.developPlayers(team));
+    }
+
     return result;
   }
 
@@ -178,5 +187,61 @@ export class GameState {
         (m.homeTeamId === playerTeam.id || m.awayTeamId === playerTeam.id))
       .slice(-limit)
       .reverse();
+  }
+
+  /**
+   * Get top scorers across all teams
+   */
+  getTopScorers(limit: number = 10): Array<{player: Player; team: Team}> {
+    const allPlayers: Array<{player: Player; team: Team}> = [];
+    
+    this.teams.forEach(team => {
+      team.players.forEach(player => {
+        allPlayers.push({player, team});
+      });
+    });
+
+    return allPlayers
+      .filter(({player}) => player.goals > 0)
+      .sort((a, b) => b.player.goals - a.player.goals)
+      .slice(0, limit);
+  }
+
+  /**
+   * Get top assist providers across all teams
+   */
+  getTopAssisters(limit: number = 10): Array<{player: Player; team: Team}> {
+    const allPlayers: Array<{player: Player; team: Team}> = [];
+    
+    this.teams.forEach(team => {
+      team.players.forEach(player => {
+        allPlayers.push({player, team});
+      });
+    });
+
+    return allPlayers
+      .filter(({player}) => player.assists > 0)
+      .sort((a, b) => b.player.assists - a.player.assists)
+      .slice(0, limit);
+  }
+
+  /**
+   * Get player team statistics
+   */
+  getTeamTopPlayers(): {scorers: Player[]; assisters: Player[]} {
+    const team = this.getPlayerTeam();
+    if (!team) return {scorers: [], assisters: []};
+
+    const scorers = [...team.players]
+      .filter(p => p.goals > 0)
+      .sort((a, b) => b.goals - a.goals)
+      .slice(0, 5);
+
+    const assisters = [...team.players]
+      .filter(p => p.assists > 0)
+      .sort((a, b) => b.assists - a.assists)
+      .slice(0, 5);
+
+    return {scorers, assisters};
   }
 }

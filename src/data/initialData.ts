@@ -22,10 +22,18 @@ export const generatePlayer = (
   defending: overall + Math.floor(Math.random() * 10 - 5),
   physical: overall + Math.floor(Math.random() * 10 - 5),
   stamina: 100,
+  maxStamina: 100,
   morale: 75 + Math.floor(Math.random() * 25),
   form: 5 + Math.floor(Math.random() * 5),
   injured: false,
+  injuryDaysRemaining: 0,
   marketValue: overall * 100000,
+  gamesPlayed: 0,
+  goals: 0,
+  assists: 0,
+  yellowCards: 0,
+  redCards: 0,
+  minutesPlayed: 0,
 });
 
 const createSquad = (teamName: string): Player[] => {
@@ -75,7 +83,9 @@ export const initialTeams: Team[] = [
       width: 8,
       tempo: 9,
       passingStyle: 'short',
+      pressing: 'high',
     },
+    chemistry: 85,
   },
   {
     id: 'team2',
@@ -92,7 +102,9 @@ export const initialTeams: Team[] = [
       width: 7,
       tempo: 8,
       passingStyle: 'mixed',
+      pressing: 'medium',
     },
+    chemistry: 88,
   },
   {
     id: 'team3',
@@ -109,7 +121,9 @@ export const initialTeams: Team[] = [
       width: 7,
       tempo: 8,
       passingStyle: 'short',
+      pressing: 'high',
     },
+    chemistry: 82,
   },
   {
     id: 'team4',
@@ -126,7 +140,9 @@ export const initialTeams: Team[] = [
       width: 8,
       tempo: 9,
       passingStyle: 'short',
+      pressing: 'medium',
     },
+    chemistry: 79,
   },
   {
     id: 'team5',
@@ -143,7 +159,9 @@ export const initialTeams: Team[] = [
       width: 9,
       tempo: 10,
       passingStyle: 'mixed',
+      pressing: 'high',
     },
+    chemistry: 90,
   },
   {
     id: 'team6',
@@ -160,6 +178,8 @@ export const initialTeams: Team[] = [
       width: 7,
       tempo: 7,
       passingStyle: 'short',
+      pressing: 'medium',
     },
+    chemistry: 86,
   },
 ];

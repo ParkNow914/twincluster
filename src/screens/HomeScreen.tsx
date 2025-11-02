@@ -16,6 +16,7 @@ export const HomeScreen = () => {
   const playerTeam = gameState.getPlayerTeam();
   const upcomingMatches = gameState.getUpcomingMatches(3);
   const recentMatches = gameState.getRecentMatches(3);
+  const topPlayers = gameState.getTeamTopPlayers();
 
   const handleSimulateMatch = () => {
     gameState.simulateNextMatch();
@@ -38,6 +39,9 @@ export const HomeScreen = () => {
           <Text style={styles.subtitle}>{playerTeam.league}</Text>
           <Text style={styles.budget}>
             Budget: ${(playerTeam.budget / 1000000).toFixed(1)}M
+          </Text>
+          <Text style={styles.chemistry}>
+            Team Chemistry: {playerTeam.chemistry}/100 ⚡
           </Text>
         </View>
 
@@ -98,6 +102,32 @@ export const HomeScreen = () => {
           )}
         </View>
 
+        {(topPlayers.scorers.length > 0 || topPlayers.assisters.length > 0) && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>⭐ Top Performers</Text>
+            {topPlayers.scorers.length > 0 && (
+              <View style={styles.topPlayersCard}>
+                <Text style={styles.topPlayersTitle}>Top Scorers</Text>
+                {topPlayers.scorers.slice(0, 3).map((player) => (
+                  <Text key={player.id} style={styles.topPlayerText}>
+                    ⚽ {player.name}: {player.goals} goals
+                  </Text>
+                ))}
+              </View>
+            )}
+            {topPlayers.assisters.length > 0 && (
+              <View style={styles.topPlayersCard}>
+                <Text style={styles.topPlayersTitle}>Top Assisters</Text>
+                {topPlayers.assisters.slice(0, 3).map((player) => (
+                  <Text key={player.id} style={styles.topPlayerText}>
+                    👟 {player.name}: {player.assists} assists
+                  </Text>
+                ))}
+              </View>
+            )}
+          </View>
+        )}
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>🏆 League Standings (Top 6)</Text>
           {gameState.season.standings.slice(0, 6).map((standing, index) => {
@@ -156,6 +186,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#4caf50',
     marginTop: 5,
+  },
+  chemistry: {
+    fontSize: 14,
+    color: '#ff9800',
+    marginTop: 5,
+    fontWeight: '600',
   },
   section: {
     backgroundColor: '#fff',
@@ -241,5 +277,24 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#1a237e',
     textAlign: 'center',
+  },
+  topPlayersCard: {
+    marginBottom: 15,
+    padding: 10,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 8,
+    borderLeftWidth: 3,
+    borderLeftColor: '#4caf50',
+  },
+  topPlayersTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 8,
+  },
+  topPlayerText: {
+    fontSize: 13,
+    color: '#555',
+    marginBottom: 4,
   },
 });
