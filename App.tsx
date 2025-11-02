@@ -6,6 +6,7 @@ import { SquadScreen } from './src/screens/SquadScreen';
 import { MatchesScreen } from './src/screens/MatchesScreen';
 import { StandingsScreen } from './src/screens/StandingsScreen';
 import { TacticsScreen } from './src/screens/TacticsScreen';
+import { TransferMarketScreen } from './src/screens/TransferMarketScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,7 +27,7 @@ export default function App() {
             paddingTop: 8,
           },
           tabBarLabelStyle: {
-            fontSize: 11,
+            fontSize: 10,
             fontWeight: '600',
           },
         }}
@@ -44,6 +45,14 @@ export default function App() {
           component={SquadScreen}
           options={{
             tabBarLabel: 'Squad',
+            tabBarIcon: () => null,
+          }}
+        />
+        <Tab.Screen
+          name="Transfer"
+          component={TransferMarketScreen}
+          options={{
+            tabBarLabel: 'Market',
             tabBarIcon: () => null,
           }}
         />

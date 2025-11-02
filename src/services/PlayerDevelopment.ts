@@ -92,8 +92,8 @@ export class PlayerDevelopment {
   /**
    * Get relevant stats for a position
    */
-  private static getRelevantStats(position: string): (keyof Player)[] {
-    const positionStats: Record<string, (keyof Player)[]> = {
+  private static getRelevantStats(position: string): Array<'pace' | 'shooting' | 'passing' | 'dribbling' | 'defending' | 'physical'> {
+    const positionStats: Record<string, Array<'pace' | 'shooting' | 'passing' | 'dribbling' | 'defending' | 'physical'>> = {
       GK: ['defending', 'physical'],
       CB: ['defending', 'physical'],
       LB: ['defending', 'pace'],
@@ -138,23 +138,16 @@ export class PlayerDevelopment {
   /**
    * Train a specific player in a specific attribute
    */
-  static trainPlayer(player: Player, attribute: keyof Player): void {
+  static trainPlayer(player: Player, attribute: 'pace' | 'shooting' | 'passing' | 'dribbling' | 'defending' | 'physical'): void {
     if (player.injured) {
       return; // Can't train injured players
     }
 
-    const numericAttributes: Array<keyof Player> = [
-      'pace', 'shooting', 'passing', 'dribbling', 'defending', 'physical'
-    ];
-
-    if (!numericAttributes.includes(attribute)) {
-      return;
-    }
-
     // Training improves the stat slightly
-    const currentValue = player[attribute] as number;
+    const currentValue = player[attribute];
     if (currentValue < 99) {
-      (player[attribute] as number) = Math.min(99, currentValue + Math.floor(Math.random() * 2 + 1));
+      const improvement = Math.floor(Math.random() * 2 + 1);
+      player[attribute] = Math.min(99, currentValue + improvement);
       
       // Update overall rating based on improvements
       const avgStat = (player.pace + player.shooting + player.passing + 
@@ -173,14 +166,14 @@ export class PlayerDevelopment {
   /**
    * Team training session - trains all players
    */
-  static teamTrainingSession(team: Team, focusAttribute?: keyof Player): void {
+  static teamTrainingSession(team: Team, focusAttribute?: 'pace' | 'shooting' | 'passing' | 'dribbling' | 'defending' | 'physical'): void {
     team.players.forEach(player => {
       if (!player.injured) {
         if (focusAttribute) {
           this.trainPlayer(player, focusAttribute);
         } else {
           // Random attribute training
-          const attributes: Array<keyof Player> = [
+          const attributes: Array<'pace' | 'shooting' | 'passing' | 'dribbling' | 'defending' | 'physical'> = [
             'pace', 'shooting', 'passing', 'dribbling', 'defending', 'physical'
           ];
           const randomAttr = attributes[Math.floor(Math.random() * attributes.length)];

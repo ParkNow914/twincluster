@@ -44,8 +44,9 @@ export class MatchSimulator {
 
     // Calculate possession based on team strength and tactics
     const totalStrength = homeStrength + awayStrength;
-    match.statistics.homePossession = Math.round((homeStrength / totalStrength) * 100);
-    match.statistics.awayPossession = 100 - match.statistics.homePossession;
+    const stats = match.statistics!; // Non-null assertion: statistics is initialized above
+    stats.homePossession = Math.round((homeStrength / totalStrength) * 100);
+    stats.awayPossession = 100 - stats.homePossession;
 
     // Simulate 90 minutes
     for (let minute = 1; minute <= 90; minute += 5) {
@@ -59,8 +60,8 @@ export class MatchSimulator {
         const assister = this.selectRandomMidfielder(homeTeam.players);
         
         match.homeScore++;
-        match.statistics.homeShots++;
-        match.statistics.homeShotsOnTarget++;
+        stats.homeShots++;
+        stats.homeShotsOnTarget++;
         
         // Update player stats
         scorer.goals++;
@@ -87,7 +88,7 @@ export class MatchSimulator {
         });
       } else if (Math.random() < 0.05) {
         // Missed shot
-        match.statistics.homeShots++;
+        stats.homeShots++;
       }
 
       // Away team attack
@@ -96,8 +97,8 @@ export class MatchSimulator {
         const assister = this.selectRandomMidfielder(awayTeam.players);
         
         match.awayScore++;
-        match.statistics.awayShots++;
-        match.statistics.awayShotsOnTarget++;
+        stats.awayShots++;
+        stats.awayShotsOnTarget++;
         
         scorer.goals++;
         scorer.gamesPlayed++;
@@ -122,7 +123,7 @@ export class MatchSimulator {
           relatedPlayerId: assister?.id,
         });
       } else if (Math.random() < 0.05) {
-        match.statistics.awayShots++;
+        stats.awayShots++;
       }
 
       // Yellow cards (more likely with high pressing)
@@ -133,9 +134,9 @@ export class MatchSimulator {
         
         player.yellowCards++;
         if (teamId === homeTeam.id) {
-          match.statistics.homeFouls++;
+          stats.homeFouls++;
         } else {
-          match.statistics.awayFouls++;
+          stats.awayFouls++;
         }
         
         // Check for second yellow (red card)
@@ -203,7 +204,7 @@ export class MatchSimulator {
         
         if (penaltySuccess) {
           match.homeScore++;
-          match.statistics.homeShotsOnTarget++;
+          stats.homeShotsOnTarget++;
           scorer.goals++;
           match.events.push({
             minute,
@@ -229,7 +230,7 @@ export class MatchSimulator {
         
         if (penaltySuccess) {
           match.awayScore++;
-          match.statistics.awayShotsOnTarget++;
+          stats.awayShotsOnTarget++;
           scorer.goals++;
           match.events.push({
             minute,
@@ -251,10 +252,10 @@ export class MatchSimulator {
 
       // Corners
       if (Math.random() < 0.08) {
-        match.statistics.homeCorners++;
+        stats.homeCorners++;
       }
       if (Math.random() < 0.06) {
-        match.statistics.awayCorners++;
+        stats.awayCorners++;
       }
 
       // Injuries (rare)
@@ -277,8 +278,8 @@ export class MatchSimulator {
     }
 
     // Calculate pass accuracy based on team tactics and stats
-    match.statistics.homePassAccuracy = this.calculatePassAccuracy(homeTeam);
-    match.statistics.awayPassAccuracy = this.calculatePassAccuracy(awayTeam);
+    stats.homePassAccuracy = this.calculatePassAccuracy(homeTeam);
+    stats.awayPassAccuracy = this.calculatePassAccuracy(awayTeam);
 
     // Update all players' games played and minutes
     this.updatePlayerStats(homeTeam, awayTeam);

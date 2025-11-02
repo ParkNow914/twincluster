@@ -1,5 +1,6 @@
 import { Team } from '../models/Team';
 import { Match, Season, TeamStanding } from '../models/Match';
+import { Player } from '../models/Player';
 import { initialTeams } from '../data/initialData';
 import { MatchSimulator } from './MatchSimulator';
 import { PlayerDevelopment } from './PlayerDevelopment';
@@ -84,6 +85,10 @@ export class GameState {
 
   getPlayerTeam(): Team | undefined {
     return this.teams.find(t => t.id === this.playerTeamId);
+  }
+
+  getAllTeams(): Team[] {
+    return this.teams;
   }
 
   getTeamById(id: string): Team | undefined {
@@ -223,6 +228,13 @@ export class GameState {
       .filter(({player}) => player.assists > 0)
       .sort((a, b) => b.player.assists - a.player.assists)
       .slice(0, limit);
+  }
+
+  /**
+   * Get current season
+   */
+  getCurrentSeason(): Season {
+    return this.season;
   }
 
   /**

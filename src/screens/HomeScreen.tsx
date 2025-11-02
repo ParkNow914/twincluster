@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,12 +6,56 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import { GameState } from '../services/GameState';
+import { SaveLoadService } from '../services/SaveLoadService';
 
 export const HomeScreen = () => {
   const [gameState] = useState(() => GameState.getInstance());
   const [, forceUpdate] = useState(0);
+  const [hasSave, setHasSave] = useState(false);
+
+  useEffect(() => {
+    checkForSave();
+  }, []);
+
+  const checkForSave = async () => {
+    const saveExists = await SaveLoadService.hasSave();
+    setHasSave(saveExists);
+  };
+
+  const handleSave = async () => {
+    const success = await SaveLoadService.saveGame();
+    if (success) {
+      Alert.alert('Success', 'Game saved successfully!', [{ text: 'OK' }]);
+      setHasSave(true);
+    } else {
+      Alert.alert('Error', 'Failed to save game', [{ text: 'OK' }]);
+    }
+  };
+
+  const handleLoad = async () => {
+    Alert.alert(
+      'Load Game',
+      'This will overwrite your current progress. Continue?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Load',
+          onPress: async () => {
+            const success = await SaveLoadService.loadGame();
+            if (success) {
+              Alert.alert('Success', 'Game loaded successfully!', [{ text: 'OK' }]);
+              forceUpdate(prev => prev + 1);
+            } else {
+              Alert.alert('Error', 'Failed to load game', [{ text: 'OK' }]);
+            }
+          },
+        },
+      ]
+    );
+  };
 
   const playerTeam = gameState.getPlayerTeam();
   const upcomingMatches = gameState.getUpcomingMatches(3);
@@ -43,6 +87,23 @@ export const HomeScreen = () => {
           <Text style={styles.chemistry}>
             Team Chemistry: {playerTeam.chemistry}/100 ⚡
           </Text>
+        </View>
+
+        <View style={styles.saveLoadSection}>
+          <TouchableOpacity
+            style={styles.saveButton}
+            onPress={handleSave}
+          >
+            <Text style={styles.saveButtonText}>💾 Save Game</Text>
+          </TouchableOpacity>
+          {hasSave && (
+            <TouchableOpacity
+              style={styles.loadButton}
+              onPress={handleLoad}
+            >
+              <Text style={styles.loadButtonText}>📂 Load Game</Text>
+            </TouchableOpacity>
+          )}
         </View>
 
         <View style={styles.section}>
@@ -209,6 +270,45 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     color: '#333',
+  },
+  saveLoadSection: {
+    flexDirection: 'row',
+    gap: 10,
+    margin: 10,
+  },
+  saveButton: {
+    flex: 1,
+    backgroundColor: '#2196f3',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  saveButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  loadButton: {
+    flex: 1,
+    backgroundColor: '#ff9800',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  loadButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
   actionButton: {
     backgroundColor: '#4caf50',
