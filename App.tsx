@@ -12,6 +12,9 @@ import { YouthAcademyScreen } from './src/screens/YouthAcademyScreen';
 import ClubManagementScreen from './src/screens/ClubManagementScreen';
 import { ManagerProfileScreen } from './src/screens/ManagerProfileScreen';
 import { StaffManagementScreen } from './src/screens/StaffManagementScreen';
+import FacilitiesScreen from './src/screens/FacilitiesScreen';
+import PressConferenceScreen from './src/screens/PressConferenceScreen';
+import MessagesScreen from './src/screens/MessagesScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -122,6 +125,30 @@ export default function App() {
           component={StaffManagementScreen}
           options={{
             tabBarLabel: 'Staff',
+            tabBarIcon: () => null,
+          }}
+        />
+        <Tab.Screen
+          name="Facilities"
+          component={FacilitiesScreen}
+          options={{
+            tabBarLabel: 'Facilities',
+            tabBarIcon: () => null,
+          }}
+        />
+        <Tab.Screen
+          name="Press"
+          component={PressConferenceScreen}
+          options={{
+            tabBarLabel: 'Press',
+            tabBarIcon: () => null,
+          }}
+        />
+        <Tab.Screen
+          name="Messages"
+          component={MessagesScreen}
+          options={{
+            tabBarLabel: 'Messages',
             tabBarIcon: () => null,
           }}
         />
