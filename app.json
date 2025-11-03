@@ -1,0 +1,76 @@
+{
+  "expo": {
+    "name": "Football Manager 2026",
+    "slug": "football-manager-2026",
+    "version": "1.0.0",
+    "description": "A comprehensive cross-platform football management simulation game with 90+ features across 14 screens",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a237e"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.twincluster.footballmanager2026",
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "UIBackgroundModes": ["fetch"],
+        "NSPhotoLibraryUsageDescription": "This app does not access your photo library.",
+        "NSCameraUsageDescription": "This app does not access your camera."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1a237e"
+      },
+      "package": "com.twincluster.footballmanager2026",
+      "versionCode": 1,
+      "permissions": [],
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "jsEngine": "hermes",
+      "enableDangerousExperimentalLeanBuilds": true
+    },
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#1a237e"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "name": "Football Manager 2026",
+      "shortName": "FM 2026",
+      "description": "Cross-platform football management game with complete career mode",
+      "themeColor": "#1a237e",
+      "backgroundColor": "#ffffff",
+      "display": "standalone",
+      "orientation": "portrait",
+      "startUrl": ".",
+      "scope": ".",
+      "bundler": "metro"
+    },
+    "plugins": [
+      [
+        "@react-native-async-storage/async-storage",
+        {
+          "AsyncStorageExcludeModulesForWeb": ["expo-asset"]
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "twincluster-fm2026"
+      }
+    }
+  }
+}
