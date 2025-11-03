@@ -10,6 +10,8 @@ import { TransferMarketScreen } from './src/screens/TransferMarketScreen';
 import { StatisticsScreen } from './src/screens/StatisticsScreen';
 import { YouthAcademyScreen } from './src/screens/YouthAcademyScreen';
 import ClubManagementScreen from './src/screens/ClubManagementScreen';
+import { ManagerProfileScreen } from './src/screens/ManagerProfileScreen';
+import { StaffManagementScreen } from './src/screens/StaffManagementScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -104,6 +106,22 @@ export default function App() {
           component={StandingsScreen}
           options={{
             tabBarLabel: 'Table',
+            tabBarIcon: () => null,
+          }}
+        />
+        <Tab.Screen
+          name="Manager"
+          component={ManagerProfileScreen}
+          options={{
+            tabBarLabel: 'Manager',
+            tabBarIcon: () => null,
+          }}
+        />
+        <Tab.Screen
+          name="Staff"
+          component={StaffManagementScreen}
+          options={{
+            tabBarLabel: 'Staff',
             tabBarIcon: () => null,
           }}
         />
